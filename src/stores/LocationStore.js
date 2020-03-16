@@ -12,7 +12,9 @@ class LocationStore {
       handleUpdateLocations: LocationActions.UPDATE_LOCATIONS,
       handleFetchLocations: LocationActions.FETCH_LOCATIONS,
       handleLocationsFailed: LocationActions.LOCATIONS_FAILED,
-      setFavorites: LocationActions.FAVORITE_LOCATION
+      setFavorites: LocationActions.FAVORITE_LOCATION,
+      remFavorites: LocationActions.NOT_FAVORITE_LOCATION,
+      addCity: LocationActions.ADD_LOCATIONS
     });
 
     this.exportPublicMethods({
@@ -47,9 +49,23 @@ class LocationStore {
 
   setFavorites(location) {
     this.waitFor(FavoritesStore);
+    this.updateFavorites(location);
+  }
+
+  remFavorites(location) {
+    this.updateFavorites(location);
+  }
+
+  addCity(location){
+    this.locations.push(location);
+  }
+
+  updateFavorites(location) {
+    this.waitFor(FavoritesStore);
 
     var favoritedLocations = FavoritesStore.getState().locations;
 
+    debugger;
     this.resetAllFavorites();
 
     favoritedLocations.forEach((location) => {
